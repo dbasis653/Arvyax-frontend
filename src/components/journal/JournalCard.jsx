@@ -13,23 +13,29 @@ import './JournalCard.css';
 //   entry — a journal entry object from the API
 export function JournalCard({ entry: initialEntry }) {
   const [entry, setEntry] = useState(initialEntry);
-  const [isAnalyzing, setIsAnalyzing] = useState(false);
+  const [streamState, setStreamState] = useState('idle'); // 'idle' | 'streaming' | 'error'
   const [analyzeError, setAnalyzeError] = useState(null);
 
   const hasAnalysis = entry.emotion && entry.emotion !== 'no-analysis';
 
-  // Calls the analyze endpoint and updates local entry state with the result.
+  // Opens the SSE stream to the analyze endpoint and updates card state progressively.
+  // onDone swaps in the full updated entry, transitioning to the structured analysis view.
+  // onError surfaces the message and re-enables the Analyze button.
   async function handleAnalyze() {
-    setIsAnalyzing(true);
+    setStreamState('streaming');
     setAnalyzeError(null);
-    try {
-      const updated = await analyzeEntry(entry.id);
-      setEntry(updated);
-    } catch (err) {
-      setAnalyzeError(err.message);
-    } finally {
-      setIsAnalyzing(false);
-    }
+
+    await analyzeEntry(entry.id, {
+      onChunk() {},
+      onDone(updatedEntry) {
+        setEntry(updatedEntry);
+        setStreamState('idle');
+      },
+      onError(message) {
+        setAnalyzeError(message);
+        setStreamState('error');
+      },
+    });
   }
 
   return (
@@ -70,7 +76,19 @@ export function JournalCard({ entry: initialEntry }) {
             </div>
           )}
         </div>
+      ) : streamState === 'streaming' ? (
+
+        // ── Streaming in progress ──
+        <div className="journal-card__streaming">
+          <div className="journal-card__streaming-header">
+            <span className="journal-card__streaming-dot" aria-hidden="true" />
+            <span className="journal-card__streaming-label">AI is writing…</span>
+          </div>
+        </div>
+
       ) : (
+
+        // ── No analysis yet / error ──
         <div className="journal-card__no-analysis">
           {analyzeError && (
             <p className="journal-card__analyze-error">{analyzeError}</p>
@@ -78,9 +96,9 @@ export function JournalCard({ entry: initialEntry }) {
           <button
             className="journal-card__analyze-btn"
             onClick={handleAnalyze}
-            disabled={isAnalyzing}
+            disabled={streamState === 'streaming'}
           >
-            {isAnalyzing ? 'Analyzing…' : 'Analyze'}
+            Analyze
           </button>
         </div>
       )}

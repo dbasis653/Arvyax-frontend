@@ -1,4 +1,4 @@
-const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL;
+const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL ?? "";
 
 // All backend endpoint paths in one place.
 // Functions return dynamic segments to avoid manual string concatenation at call sites.
