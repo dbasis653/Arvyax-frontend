@@ -1,0 +1,68 @@
+.badge {
+  display: inline-block;
+  padding: 3px 10px;
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: 0.3px;
+  text-transform: capitalize;
+}
+
+/* ── Emotion variants ── */
+
+.badge--calm {
+  background: rgba(99, 179, 237, 0.15);
+  color: #2b7fc4;
+}
+
+.badge--happy {
+  background: rgba(251, 211, 141, 0.2);
+  color: #b45309;
+}
+
+.badge--excited {
+  background: rgba(252, 165, 165, 0.2);
+  color: #b91c1c;
+}
+
+.badge--sad {
+  background: rgba(147, 197, 253, 0.15);
+  color: #1d4ed8;
+}
+
+.badge--anxious {
+  background: rgba(253, 186, 116, 0.2);
+  color: #c2410c;
+}
+
+.badge--angry {
+  background: rgba(252, 165, 165, 0.25);
+  color: #991b1b;
+}
+
+.badge--reflective {
+  background: rgba(196, 181, 253, 0.2);
+  color: #6d28d9;
+}
+
+.badge--grateful {
+  background: rgba(110, 231, 183, 0.2);
+  color: #065f46;
+}
+
+.badge--hopeful {
+  background: rgba(167, 243, 208, 0.2);
+  color: #047857;
+}
+
+.badge--tired {
+  background: rgba(209, 213, 219, 0.3);
+  color: #4b5563;
+}
+
+/* ── Fallback for unknown emotions ── */
+
+.badge--default {
+  background: var(--accent-bg);
+  color: var(--accent);
+}
