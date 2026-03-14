@@ -7,14 +7,14 @@ import { LoginForm } from "@/components/auth/LoginForm";
 import { Spinner } from "@/components/ui/Spinner";
 
 export default function HomePage() {
-  const { user, isLoading } = useUser();
+  const { user, isInitializing } = useUser();
   const router = useRouter();
 
   useEffect(() => {
-    if (!isLoading && user) router.replace("/journal");
-  }, [user, isLoading]);
+    if (!isInitializing && user) router.replace("/journal");
+  }, [user, isInitializing]);
 
-  if (isLoading) {
+  if (isInitializing) {
     return (
       <div
         style={{

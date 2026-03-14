@@ -8,7 +8,8 @@ import { createUser, loginUser } from '@/services/user.service';
 
 const initialState = {
   user: null,
-  isLoading: true,
+  isLoading: false,
+  isInitializing: true,
   error: null,
 };
 
@@ -20,7 +21,7 @@ const initialState = {
 function userReducer(state, action) {
   switch (action.type) {
     case 'RESTORE':
-      return { ...state, user: action.payload, isLoading: false };
+      return { ...state, user: action.payload, isLoading: false, isInitializing: false };
     case 'AUTH_START':
       return { ...state, isLoading: true, error: null };
     case 'AUTH_SUCCESS':
