@@ -16,7 +16,6 @@ export default function JournalPage() {
   const { entries, isLoading: isEntriesLoading, error: entriesError, fetchEntries } = useJournal();
   const { insights, isLoading: isInsightsLoading, fetchInsights } = useInsights();
 
-  // Load entries and insights when the page mounts
   useEffect(() => {
     if (user) {
       fetchEntries(user.username);
@@ -24,7 +23,6 @@ export default function JournalPage() {
     }
   }, [user]);
 
-  // Refreshes both entries and insights after a new entry is submitted
   function handleEntrySuccess() {
     fetchEntries(user.username);
     if (user.id) fetchInsights(user.id);

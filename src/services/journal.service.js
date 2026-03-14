@@ -89,8 +89,13 @@ async function analyzeEntry(id, { onChunk, onDone, onError }) {
         let event;
         try { event = JSON.parse(raw); } catch { continue; }
 
-        if (event.type === 'chunk') onChunk(event.text);
-        else if (event.type === 'done') onDone(event.entry);
+        if (event.type === 'chunk') {
+          onChunk(event.text);
+          // Yield to the browser's paint cycle after each chunk so flushSync
+          // commits in JournalCard are actually painted one by one, not batched
+          // into a single frame when multiple SSE events arrive in one TCP packet.
+          await new Promise((r) => setTimeout(r, 0));
+        } else if (event.type === 'done') onDone(event.entry);
         else if (event.type === 'error') onError(event.message);
       }
     }
