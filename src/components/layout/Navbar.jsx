@@ -1,50 +1,65 @@
-'use client';
+"use client";
 
-import Link from 'next/link';
-import { usePathname } from 'next/navigation';
-import { useUser } from '@/context/UserContext';
-import { Button } from '@/components/ui/Button';
-import './Navbar.css';
+import Link from "next/link";
+import { usePathname } from "next/navigation";
+import { useUser } from "@/context/UserContext";
 
-// Top navigation bar. Shows the app name, nav links, current username, and logout button.
-// Active link is highlighted based on the current pathname.
+// Top navigation bar — frosted glass effect, gradient brand, active nav links.
 export function Navbar() {
   const { user, logout } = useUser();
   const pathname = usePathname();
 
   return (
-    <nav className="navbar">
-      <div className="navbar__inner">
-
+    <nav className="navbar" style={{ display: "block" }}>
+      <div
+        style={{
+          maxWidth: "1120px",
+          margin: "0 auto",
+          padding: "0 24px",
+          height: "56px",
+          display: "flex",
+          flexDirection: "row",
+          alignItems: "center",
+          gap: "24px",
+        }}
+      >
         {/* ── Brand ── */}
-        <Link href="/journal" className="navbar__brand">
+        <Link
+          href="/journal"
+          className="navbar-brand"
+          style={{ textDecoration: "none" }}
+        >
           Arvyax
         </Link>
 
         {/* ── Nav links ── */}
-        <div className="navbar__links">
+        <div style={{ display: "flex", gap: "4px", flex: 1 }}>
           <Link
             href="/journal"
-            className={`navbar__link ${pathname === '/journal' ? 'navbar__link--active' : ''}`}
+            className={`nav-link${pathname === "/journal" ? " active" : ""}`}
           >
             Journal
-          </Link>
-          <Link
-            href="/insights"
-            className={`navbar__link ${pathname === '/insights' ? 'navbar__link--active' : ''}`}
-          >
-            Insights
           </Link>
         </div>
 
         {/* ── User + logout ── */}
-        <div className="navbar__user">
-          <span className="navbar__username">@{user?.username}</span>
-          <Button variant="ghost" size="sm" onClick={logout}>
+        <div
+          style={{
+            display: "flex",
+            alignItems: "center",
+            gap: "10px",
+            flexShrink: 0,
+          }}
+        >
+          <span
+            style={{ fontSize: "13px", color: "var(--text)", fontWeight: 500 }}
+          >
+            @{user?.username}
+          </span>
+          <button className="btn btn-ghost btn-sm" onClick={logout}>
             Log out
-          </Button>
+          </button>
         </div>
-
       </div>
     </nav>
   );

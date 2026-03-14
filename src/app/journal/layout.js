@@ -4,7 +4,7 @@ import { useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { useUser } from '@/context/UserContext';
 import { Navbar } from '@/components/layout/Navbar';
-import Spinner from '@/components/ui/Spinner';
+import { Spinner } from '@/components/ui/Spinner';
 
 // Auth guard for all /journal routes.
 // Redirects unauthenticated users to / before rendering any child page.
@@ -21,7 +21,7 @@ export default function JournalLayout({ children }) {
   // ── Restoring session ──
   if (isLoading) {
     return (
-      <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', minHeight: '60vh' }}>
+      <div className="flex justify-center items-center min-h-[60vh]">
         <Spinner size="lg" />
       </div>
     );
@@ -33,7 +33,7 @@ export default function JournalLayout({ children }) {
   return (
     <>
       <Navbar />
-      <div className="page-content">{children}</div>
+      <div className="flex-1">{children}</div>
     </>
   );
 }

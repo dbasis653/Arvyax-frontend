@@ -1,16 +1,49 @@
-# React + Vite
+# Arvyax — Frontend
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Next.js frontend for the Arvyax AI-assisted journaling system. Users write journal entries, trigger live LLM analysis (streamed word by word), and view emotion insights.
 
-Currently, two official plugins are available:
+---
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+## Tech Stack
 
-## React Compiler
+- Next.js 15 (App Router)
+- React 19
+- Tailwind CSS 4
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+---
 
-## Expanding the ESLint configuration
+## Prerequisites
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+- Node.js v18+
+- The [Arvyax backend](https://github.com/your-org/arvyax-backend) running on port 5000
+
+---
+
+## Environment Variables
+
+Create a `.env.local` file in the project root:
+
+```
+NEXT_PUBLIC_API_BASE_URL=http://localhost:5000
+```
+
+---
+
+## Install & Run
+
+```bash
+npm install
+
+npm run dev          # development (http://localhost:3000)
+npm run build        # production build
+npm start            # serve production build
+```
+
+---
+
+## What It Does
+
+- **Login page** — enter a username to access your journal
+- **Journal page** — write entries with an ambience (forest / ocean / mountain)
+- **Live analysis** — click Analyze on any entry to stream the LLM summary word by word
+- **Insights panel** — top emotion, most used ambience, recent keywords across all entries

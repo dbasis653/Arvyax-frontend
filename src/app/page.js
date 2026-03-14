@@ -4,35 +4,44 @@ import { useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { useUser } from "@/context/UserContext";
 import { LoginForm } from "@/components/auth/LoginForm";
-import Spinner from "@/components/ui/Spinner";
-import "./page.css";
+import { Spinner } from "@/components/ui/Spinner";
 
 export default function HomePage() {
   const { user, isLoading } = useUser();
   const router = useRouter();
 
-  // If already logged in (e.g. sessionStorage restored on refresh), skip auth screen
   useEffect(() => {
-    if (!isLoading && user) {
-      router.replace("/journal");
-    }
+    if (!isLoading && user) router.replace("/journal");
   }, [user, isLoading]);
 
-  // ── Restoring user from sessionStorage ──
   if (isLoading) {
     return (
-      <div className="home-loading">
+      <div
+        style={{
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          minHeight: "60vh",
+        }}
+      >
         <Spinner size="lg" />
       </div>
     );
   }
 
-  // ── Already logged in — redirect in progress ──
   if (user) return null;
 
-  // ── Not logged in — show auth screen ──
   return (
-    <main className="home-auth page-content">
+    <main
+      style={{
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center",
+        minHeight: "85vh",
+        padding: "40px 24px",
+        flex: 1,
+      }}
+    >
       <LoginForm onSuccess={() => router.push("/journal")} />
     </main>
   );

@@ -1,13 +1,14 @@
-import './Button.css';
-import Spinner from './Spinner';
+'use client';
 
-// General-purpose button. Renders a native <button> with variant-based styling.
+import { Spinner } from './Spinner';
+
+// General-purpose button. Variants map to CSS classes defined in globals.css.
 // Props:
 //   variant   — 'primary' (default) | 'secondary' | 'ghost'
 //   size      — 'md' (default) | 'sm' | 'lg'
 //   loading   — shows inline spinner and disables the button
 //   disabled  — disables without showing spinner
-//   type      — passed through to <button> (default: 'button')
+
 export function Button({
   children,
   variant = 'primary',
@@ -19,21 +20,19 @@ export function Button({
   className = '',
   ...rest
 }) {
+  const sizeClass = size === 'sm' ? 'btn-sm' : size === 'lg' ? 'btn-lg' : '';
+  const cls = `btn btn-${variant} ${sizeClass} ${className}`.trim();
+
   return (
     <button
       type={type}
-      className={`btn btn--${variant} btn--${size} ${className}`.trim()}
+      className={cls}
       disabled={disabled || loading}
       onClick={onClick}
       {...rest}
     >
-      {/* ── Loading spinner ── */}
       {loading && <Spinner size="sm" />}
-
-      {/* ── Label ── */}
-      <span className={loading ? 'btn__label btn__label--loading' : 'btn__label'}>
-        {children}
-      </span>
+      <span style={{ opacity: loading ? 0.7 : 1 }}>{children}</span>
     </button>
   );
 }

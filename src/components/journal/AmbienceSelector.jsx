@@ -1,33 +1,32 @@
-import './AmbienceSelector.css';
 import { AMBIENCE_OPTIONS } from '@/constants/journal.constants';
 
-// Controlled radio group for selecting a journal ambience (forest/ocean/mountain).
-// Renders each option as a clickable card — no native radio UI shown.
+// Controlled radio group for selecting a journal ambience.
 // Props:
-//   value     — the currently selected ambience string (or null)
+//   value     — currently selected ambience string (or null)
 //   onChange  — called with the new ambience string when a card is clicked
 export function AmbienceSelector({ value, onChange }) {
   return (
-    <fieldset className="ambience-selector">
-      <legend className="ambience-selector__legend">Ambience</legend>
-
-      {/* ── Option cards ── */}
-      <div className="ambience-selector__options">
+    <fieldset style={{ border: 0, padding: 0, margin: 0 }}>
+      <legend style={{ fontSize: '13px', fontWeight: 600, color: 'var(--text-h)', marginBottom: '10px' }}>
+        Ambience
+      </legend>
+      <div style={{ display: 'flex', gap: '10px' }}>
         {AMBIENCE_OPTIONS.map((option) => (
           <label
             key={option.value}
-            className={`ambience-option ${value === option.value ? 'ambience-option--selected' : ''}`}
+            className={`ambience-card${value === option.value ? ' selected' : ''}`}
           >
+            {/* Hidden native radio */}
             <input
               type="radio"
               name="ambience"
               value={option.value}
               checked={value === option.value}
               onChange={() => onChange(option.value)}
-              className="ambience-option__input"
+              style={{ position: 'absolute', opacity: 0, width: 0, height: 0 }}
             />
-            <span className="ambience-option__icon" aria-hidden="true">{option.icon}</span>
-            <span className="ambience-option__label">{option.label}</span>
+            <span className="ambience-icon" aria-hidden="true">{option.icon}</span>
+            <span className="ambience-label">{option.label}</span>
           </label>
         ))}
       </div>

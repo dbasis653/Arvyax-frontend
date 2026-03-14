@@ -14,6 +14,9 @@ const initialState = {
 
 // ── Reducer ──────────────────────────────────────────────────────────────────
 
+// Manages auth state transitions for the UserContext.
+// Handles RESTORE (session rehydration), AUTH_START/SUCCESS/ERROR (login/register flow), and LOGOUT.
+// Returns a new state object for each action type; falls through to current state for unknown actions.
 function userReducer(state, action) {
   switch (action.type) {
     case 'RESTORE':
